@@ -15,7 +15,7 @@ import time
 # ------------------xoxo------------------------------------
 
 # bkl yaha pe apna video ka link daal dena, baaki AURSH vaii ka code sambhal lega <33
-URL = "Paste Link Here"
+URL = "https://pwc.tekstac.com/mod/externalvideo/view.php?id=4330&start=220.8"
 SPEED = 2.0
 CHECK_INTERVAL = 2
 
@@ -53,6 +53,23 @@ def switch_to_video_iframe():
 
 
 
+def nudge_play():
+    """Toggle pause/play via JS to force the video out of a stuck loading state."""
+    try:
+        driver.execute_script("""
+            let v = document.querySelector('video');
+            if (v) {
+                v.pause();
+                v.currentTime = Math.max(v.currentTime, 1);
+                v.play();
+            }
+        """)
+        print("Nudged video playback via JS pause/play")
+        time.sleep(1)
+    except Exception as e:
+        print(f"Nudge play failed: {e}")
+
+
 def handle_video():
     result = driver.execute_script("""
     let v = document.querySelector('video');
@@ -71,9 +88,17 @@ def handle_video():
     return {
         duration: v.duration || 0,
         current: v.currentTime || 0,
-        ended: v.ended
+        ended: v.ended,
+        paused: v.paused,
+        readyState: v.readyState
     };
     """, SPEED)
+
+    # If video is stuck (paused or buffering), nudge it with a double-click
+    if result and result != "NO_VIDEO":
+        if result.get("paused") or result.get("readyState", 4) < 3:
+            print("Video appears stuck, nudging with double-click...")
+            nudge_play()
 
     return result
 
