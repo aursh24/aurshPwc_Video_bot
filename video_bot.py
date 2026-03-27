@@ -70,7 +70,8 @@ def handle_video():
 
     return {
         duration: v.duration || 0,
-        current: v.currentTime || 0
+        current: v.currentTime || 0,
+        ended: v.ended
     };
     """, SPEED)
 
@@ -183,7 +184,7 @@ while True:
         else:
             print("Loading video...")
 
-        if duration - current < 3:
+        if duration > 0 and current > 0 and (result.get("ended") or duration - current < 1):
             print("Video ending, waiting for popup...")
 
             driver.switch_to.default_content()
