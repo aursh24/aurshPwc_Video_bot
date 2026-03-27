@@ -15,7 +15,7 @@ import time
 # ------------------xoxo------------------------------------
 
 # bkl yaha pe apna video ka link daal dena, baaki AURSH vaii ka code sambhal lega <33
-URL = "https://pwc.tekstac.com/mod/externalvideo/view.php?id=4330&start=220.8"
+URL = "Paste Link Here"
 SPEED = 2.0
 CHECK_INTERVAL = 2
 
