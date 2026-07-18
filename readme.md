@@ -64,4 +64,4 @@ You can customize these settings at the top of `video_bot.py`:
 - **Educational Use**: Use responsibly!
 
 ---
-*Maintained by AURSH vaii & Antigravity <33*
+*Maintained by AURSH <33*
